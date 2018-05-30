@@ -8,12 +8,12 @@ sc = logic.getCurrentScene()
 obl = sc.objects
 mouse = logic.mouse
 
-txt1 = obl['txt_1_npc_2']
-ans1 = obl['ans_1_npc_2']
-but1 = obl['click_ans_1_npc_2']
-but2 = obl['click_ans_2_npc_2']
-ans2 = obl['ans_2_npc_2']
-npc2 = obl['npc_2']
+txt1 = obl['txt_1_npc_3']
+ans1 = obl['ans_1_npc_3']
+but1 = obl['click_ans_1_npc_3']
+but2 = obl['click_ans_2_npc_3']
+ans2 = obl['ans_2_npc_3']
+npc = obl['npc_3']
 
 char = obl['char']
 glb = obl['global']
@@ -21,10 +21,19 @@ glb = obl['global']
 inv = [glb['slot1'],glb['slot2'],glb['slot3']] #list of all inventory slots
 
 def un():
-    txt1['Text'] = 'Hi. I need some help !\nDo you have a minute ?'
+    if npc['talked'] is True:
+        txt1['Text'] = 'Ho, its you again. Want something ?'
+    else:
+        txt1['Text'] = 'Hello stranger. Need a drink ?'
+        
     but1['vis'] = True #make the overlight active
-    ans1['Text'] = 'Yes, what is it ?'
     but2['vis'] = True #make the overlight active
+    
+    if glb['barQuest'] >= 1:
+        ans1['Text'] = 'Do you know a William ?'
+    else:
+        ans1['Text'] = 'Any news from the city ?'
+    
     ans2['Text'] = 'No, I am in a hurry.'
     
 def deux():
@@ -37,12 +46,12 @@ def deux():
 
         for i,ii in enumerate(inv): #itterate the list of slots, searching for a item2
             if inv[i] == 'item2': #if it founds one :
-                npc2['got'] = True
+                npc['got'] = True
                 break
             else:
-                npc2['got'] = False
+                npc['got'] = False
 
-        if npc2['got'] is True:
+        if npc['got'] is True:
             but1['vis'] = True
             ans1['Text'] = '(Give it to him)'
             but2['vis'] = True
@@ -67,7 +76,7 @@ def deux():
 
 def trois():
     if but1['selAns'] is True:
-        if npc2['got'] is True:
+        if npc['got'] is True:
             but1['selAns'] = False
             but2['selAns'] = False
 
@@ -77,7 +86,7 @@ def trois():
             ans1['Text'] = '(Take the reward)'
             ans2['Text'] = ''
 
-        elif npc2['got'] is False:
+        elif npc['got'] is False:
             but1['selAns'] = False
             but2['selAns'] = False
 
@@ -100,20 +109,20 @@ def trois():
     else:
         pass
 
-if npc2['script'] == 0:
+if npc['script'] == 0:
     pass
-elif npc2['ended'] is True:
+elif npc['ended'] is True:
     txt1['Text'] = 'Thanks for your help !'
     ans1['Text'] = ''
     ans2['Text'] = ''
     but1['vis'] = False
     but2['vis'] = False
-    npc2['ended'] = True
-elif npc2['script'] == 1:
+    npc['ended'] = True
+elif npc['script'] == 1:
     un()
-elif npc2['script'] == 2:
+elif npc['script'] == 2:
     deux()
-elif npc2['script'] == 3:
+elif npc['script'] == 3:
     trois()
-elif npc2['script'] == 4:
-    npc2['ended'] = True
+elif npc['script'] == 4:
+    npc['ended'] = True
