@@ -12,6 +12,8 @@ mouse = logic.mouse
 char = obl['char']
 glb = obl['global']
 
+#sl1,sl2,sl3 = obl['slot1'],obl['slot2'],obl['slot3'] ##########
+
 E = cont.sensors['E'] # a keayboard sensors named E
 Near = cont.sensors['Near'] # a near sensor named Near
 
@@ -27,7 +29,13 @@ if E.positive and Near.positive:
 			print('slot',i+1,' is avalaible')
 			freeslot = True
 			free = str('slot{}'.format(i+1))
-			glb[free] = str(picking)
+			glb[free] = str(picking) #add the item in the slot
+			
+			#create visual
+			obl
+			slotpos = obl[free].position
+			
+			
 			break
 		else:
 			pass
